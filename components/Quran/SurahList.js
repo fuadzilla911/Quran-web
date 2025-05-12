@@ -1,12 +1,20 @@
+// pages/surahs.js
+import { getAllSurahs } from '../lib/quranApi';
+
+export async function getStaticProps() {
+  const surahs = await getAllSurahs();
+  return { props: { surahs } };
+}
+
 export default function SurahList({ surahs }) {
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {surahs.map(surah => (
-        <div key={surah.id} className="p-4 border rounded-lg">
-          <h3>{surah.name}</h3>
-          <p>Ayahs: {surah.ayahCount}</p>
+    <div>
+      {surahs.data.map(surah => (
+        <div key={surah.number}>
+          <h3>{surah.englishName} ({surah.name})</h3>
+          <p>Ayahs: {surah.numberOfAyahs}</p>
         </div>
       ))}
     </div>
-  )
+  );
 }
